@@ -1,3 +1,8 @@
+// Author: Walerij Hrul
+//
+// Imitation of worker class implementation 
+//
+
 #ifndef WORKERS_H
 #define WORKERS_H
 
@@ -10,12 +15,19 @@
 #include "menu.h"
 #include "additional.h"
 
+// return workerHead
 Worker* addWorker( Worker* workerHead, char surname[],  char name[], int id );
+// return the highest id among workers, 0 if empty
 unsigned long long maxWorkerId( Worker* workerHead );
+// return NULL if there is non
 Worker* searchWorkerById( Worker* workerHead, int id );
+// return wokerHead; show info in output stream if there is no one with such id
 Worker* dropWorker( Worker* workerHead, int id, Project_Worker** project_workerHead );
+// display list of workers (id & surname & name) / info that it is empty
 void showWorkers( Worker* workerHead );
+// display list of workers (id & surname & name & projects) / info that it is empty
 void showFullWorkers( Project* projectHead, Manager* managerHead, Worker* workerHead, Project_Worker* project_workerHead, char id );
+// free allocated memory; set workerHead as NULL
 void clearWorkers( Worker** workerHead );
 
 #endif

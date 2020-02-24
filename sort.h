@@ -1,3 +1,8 @@
+// Author: Walerij Hrul
+//
+// Sorting by making copies lists of data
+//
+
 #ifndef SORT_H
 #define SORT_H
 
@@ -9,16 +14,26 @@
 #include "workers.h"
 #include "additional.h"
 
+// create copy of list of projects for sorting by name
 SortW* copyProjectW( Project* projectHead, SortW** sortHead );
+// create copy of list of projects for sorting by number of workers
 SortN* copyProjectN( Project* projectHead, SortN** sortHead, Project_Worker* project_workerHead );
+// create copy of list of managers for sorting by surname
 SortW* copyManagerW( Manager* managerHead, SortW** sortHead );
+// create copy of list of workers for sorting by surname
 SortW* copyWorkerW( Worker* workerHead, SortW** sortHead );
+// sort created copy by comparing char[]; in alphabetic order; bubble sort
 SortW* sortByWord(  SortW** sortHead );
+// sort created copy by comparing int; asc order; bubble sort
 SortN* sortByNumber( SortN** sortHead );
+
+// just show list (id & sorted value) / info that empty; without sorting
 void showProjectsSortW( SortW* sortHead );
 void showProjectsSortN( SortN* sortHead, Project* projectHead );
 void showManagersSortW( SortW* sortHead, Manager* managerHead );
 void showWorkersSortW( SortW* sortHead, Worker* workerHead );
+
+// free allocated memory; set sortHead as NULL
 void clearSortW( SortW** sortHead );
 void clearSortN( SortN** sortHead );
 

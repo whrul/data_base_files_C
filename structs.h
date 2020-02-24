@@ -1,3 +1,8 @@
+// Author: Walerij Hrul
+//
+// Structurs for "objects"(project, manager, worker, worker-project), sorts, working with files 
+//
+
 #ifndef STRUCTS_H
 #define STRUCTS_H
 

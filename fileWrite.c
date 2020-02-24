@@ -7,7 +7,7 @@ bool createCopy( Project* projectHead, Manager* managerHead, Worker* workerHead,
 		return false;
 	}
 	if( !( writeProjects( f , projectHead ) && writeManagers( f, managerHead ) && writeWorkers( f, workerHead ) && writeProjectWorkers( f, project_workerHead ) ) ){
-		// fclose( f );
+		fclose( f );
 		remove( *name );
 		return false;
 	}
@@ -17,7 +17,7 @@ bool createCopy( Project* projectHead, Manager* managerHead, Worker* workerHead,
 	strftime( buf, 50, "%FT%T%z", time );;
 	fprintf( f, "#\n%s\n", buf );
 	if( ferror(f) ){
-		// fclose( f );
+		fclose( f );
 		remove( *name );
 		return false;
 	}
@@ -40,6 +40,8 @@ bool createCopy( Project* projectHead, Manager* managerHead, Worker* workerHead,
 	}
 	FILE* f2 = fopen( "data/files.txt", "a+" );
 	if( !f2 ){
+
+		fclose( f );
 		remove( *name );
 		return false;
 	} 
@@ -47,8 +49,9 @@ bool createCopy( Project* projectHead, Manager* managerHead, Worker* workerHead,
 	fprintf( f2, "\"name\":\"%s\",\n", copyFile->name );
 	fprintf( f2, "\"date\":\"%s\",\n}\n", buf );
 	if( ferror( f2 ) ){
+		fclose( f );
 		remove( *name );
-		// fclose( f2 );
+		fclose( f2 );
 		return false;
 	}
 	fclose( f2 );

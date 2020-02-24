@@ -37,5 +37,5 @@ int main( void )
 	clearProjectWorker( &project_workerHead );
 	clearCopyFiles( &copyFileHead );
 
-	return 1;
+	return 0;
 }

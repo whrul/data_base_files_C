@@ -178,7 +178,6 @@ bool checkForEndOfFile( FILE* f ){
     	fsetpos(f, &position);
     	return false;
     }
-	
 }
 
 bool readValueOfKey( FILE* const temp, char* key, char* readWord )

@@ -47,7 +47,9 @@ Project* searchProjectById( Project* projectHead, int id ){
 
 void addManagerToProject( Project* projectHead, int id_manager, int id_project ){
 	Project* temp = searchProjectById( projectHead, id_project );
-	temp->id_manager = id_manager;
+	if( temp ){
+		temp->id_manager = id_manager;
+	}
 }
 
 Project* dropProject( Project* projectHead, int id, Project_Worker** project_workerHead )
