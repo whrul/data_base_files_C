@@ -18,7 +18,7 @@
 #include "additional.h"
 
 // return projectHead
-Project* addProject( Project* projectHead, char name[], int id_manager, int id );
+Project* addProject( Project* projectHead, char name[], int id_manager, int id, bool* badAlloc );
 // return the highest id among projects, 0 if empty
 unsigned long long maxProjectId( Project* projectHead );
 // return NULL if there is non

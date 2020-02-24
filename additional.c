@@ -1,9 +1,8 @@
 #include "additional.h"
 
-void* checkMemoryAlloc( void* wsk ){
+void* checkMemoryAlloc( void* wsk, bool* badAlloc ){
 	if( !wsk ){
-		puts("No memory");
-		exit( 0 );
+		*badAlloc = true;
 	}
 	return wsk;
 }
@@ -23,8 +22,11 @@ unsigned long long readInputPositiveNumber( void ){
 	return number;
 }
 
-char* readInputWord( void ){
-	char* word = checkMemoryAlloc( calloc( MAX_LENGTH+1, sizeof( char ) ) );
+char* readInputWord( bool* badAlloc ){
+	char* word = checkMemoryAlloc( calloc( MAX_LENGTH+1, sizeof( char ) ), badAlloc );
+	if( *badAlloc ){
+		return NULL;
+	}
 	if( 1!= scanf( S_FORMAT( MAX_LENGTH ), word ) ){
 		clearBuf();
 		free( word );

@@ -30,15 +30,15 @@ bool readValueOfKey( FILE* const temp, char* key, char* readWord );
 // check if next symbol is equal to #; # means end of each kind of "object" writed in file.txt
 char checkForHash( FILE* temp );
 // check format of file; create all lists from file; do not check date at the end of file
-bool checkFileForCorrect( FILE* f, Project** projectHead, Manager** managerHead, Worker** workerHead, Project_Worker** project_workerHead );
+bool checkFileForCorrect( FILE* f, Project** projectHead, Manager** managerHead, Worker** workerHead, Project_Worker** project_workerHead, bool* badAlloc );
 // create and add to list structure Project if readed lines have correct format
-bool checkProject( FILE* f, Project** projectHead );
+bool checkProject( FILE* f, Project** projectHead, bool* badAlloc );
 // create and add to list structure Manager if readed lines have correct format
-bool checkManager( FILE* f, Manager** managerHead );
+bool checkManager( FILE* f, Manager** managerHead, bool* badAlloc );
 // create and add to list structure Worker if readed lines have correct format
-bool checkWorker( FILE* f, Worker** workerHead );
+bool checkWorker( FILE* f, Worker** workerHead, bool* badAlloc );
 // create and add to list structure Project_Worker if readed lines have correct format
-bool checkProject_Worker( FILE* f, Project_Worker** project_workerHead );
+bool checkProject_Worker( FILE* f, Project_Worker** project_workerHead, bool* badAlloc );
 
 // with saving actual position if not end
 bool checkForEndOfFile( FILE* f );
