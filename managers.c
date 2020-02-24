@@ -73,7 +73,7 @@ Manager* dropManager( Manager* managerHead, int id, Project* projectHead )
 	Project* temp = projectHead;
 	while( temp ){
 		if( temp->id_manager == id){
-			temp->id_manager == 0;
+			temp->id_manager = 0;
 		}		
 		temp=temp->next;	
 	}

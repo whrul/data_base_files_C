@@ -10,9 +10,10 @@
 #include <string.h>
 #include <stdbool.h>
 #include "structs.h"
+#include "additional.h"
+#include "projects.h"
 #include "managers.h"
 #include "workers.h"
-#include "additional.h"
 
 // create copy of list of projects for sorting by name
 SortW* copyProjectW( Project* projectHead, SortW** sortHead, bool* badAlloc );

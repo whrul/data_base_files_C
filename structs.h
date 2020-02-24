@@ -6,9 +6,7 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
-#define MAX_LENGTH 15
-#define MAX_LENGTH_FOR_FILE 30
-#define MAX_LENGTH_FOR_DATE 20
+#include "ownConsts.h"
 
 struct Project{
 	unsigned long long id;

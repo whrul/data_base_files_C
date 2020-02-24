@@ -11,11 +11,9 @@
 #include <string.h>
 #include <stddef.h>
 #include <ctype.h>
-#include "structs.h"
-#include "managers.h"
+#include "ownConsts.h"
 #include "workers.h"
-#include "menu.h"
-#include "additional.h"
+#include "managers.h"
 
 // return projectHead
 Project* addProject( Project* projectHead, char name[], int id_manager, int id, bool* badAlloc );

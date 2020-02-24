@@ -11,7 +11,10 @@
 #include <string.h>
 #include <stddef.h>
 #include "structs.h"
-#include "additional.h"
+#include "projects.h"
+#include "workers.h"
+#include "managers.h"
+
 
 // create "line" in "datatable id-id_project-id_worker" if line with such id_worker & id_project does not exist
 Project_Worker* addWorkerToProject( Project_Worker* project_workerHead, int id_worker, int id_project, int id, bool* badAlloc );

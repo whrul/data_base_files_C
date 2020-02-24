@@ -84,14 +84,6 @@ bool readFirstFileWithCopies( CopyFile** copyFileHead, bool* badAlloc ){
 	return true;
 }
 
-bool readFileWithCopies( CopyFile** copyFileHead, char* nameOfFile ){
-	FILE* f = fopen( nameOfFile, "a+" );
-	if( !f ){
-		return false;
-	}
-
-} 
-
 bool takeDataFromCopy( Project** projectHead, Manager** managerHead, Worker** workerHead, Project_Worker** project_workerHead, CopyFile** copyFileHead, int id_file, bool* badAlloc ){
 	CopyFile* fileForOpen = searchFileById( *copyFileHead, id_file );
 	if( !fileForOpen ){

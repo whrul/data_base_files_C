@@ -7,11 +7,13 @@
 #define FILE_WRITE_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
 #include <time.h>
-#include "files.h"
 #include "additional.h"
+#include "structs.h"
+#include "files.h"
 
 // write data from structures into txt-file in data/copies/{input name}
 // write new file into file with name of files for loading data from

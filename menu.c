@@ -118,7 +118,7 @@ void askForFullList( Project* projectHead, Manager* managerHead, Worker* workerH
 					showFullManagers( projectHead, managerHead, workerHead, project_workerHead, id );
 					break;
 				case 'w':
-					showFullWorkers( projectHead, managerHead, workerHead, project_workerHead, id );			
+					showFullWorkers( projectHead, workerHead, project_workerHead, id );			
 					break;
 			}
 			

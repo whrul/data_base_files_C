@@ -99,9 +99,8 @@ void showWorkers( Worker* workerHead ){
 	
 }
 
-void showFullWorkers( Project* projectHead, Manager* managerHead, Worker* workerHead, Project_Worker* project_workerHead, char id ){
+void showFullWorkers( Project* projectHead, Worker* workerHead, Project_Worker* project_workerHead, char id ){
 	Project* project = projectHead;
-	Manager* manager = managerHead;
 	Worker* worker = workerHead;
 	Project_Worker* project_worker;
 	if( worker ){

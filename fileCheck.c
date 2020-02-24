@@ -16,6 +16,9 @@ bool readChar( FILE* const temp, char symbol )
 bool checkKey( char* const key, char* const buf )
 {
 	size_t keyLength = strlen( key );
+	if( strlen( buf ) < keyLength + 3 ){
+		return false;
+	}
 	if( buf[0] == '"' && buf[ keyLength+1 ] == '"' && buf[ keyLength+2 ] == ':')
 	{
 		if( strncmp( key, buf+1, keyLength ) == 0 )
@@ -144,7 +147,7 @@ bool writeTextValueOfKeyInVariable( FILE* const temp, char* key, char* variableF
 		if( buf[0] == '"' && buf[valueLength - 1] == '"' && valueLength-2<MAX_VALUE_SIZE )
 		{
 			strncpy( variableForWriting, buf+1, valueLength-2 );
-			variableForWriting[valueLength-2];
+			variableForWriting[valueLength-2] = '\0';
 			return true;
 		}
 	}
@@ -170,7 +173,7 @@ bool writeNumberValueOfKeyInVariable( FILE* const temp, char* key, unsigned long
 bool checkForEndOfFile( FILE* f ){
 	fpos_t position;
 	fgetpos(f, &position);
-	char c = fgetc( f );
+	fgetc( f );
     if( feof( f ) ){
     	return true;
     }

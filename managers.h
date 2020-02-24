@@ -10,10 +10,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stddef.h>
+#include <stdbool.h>
 #include "structs.h"
-#include "workers.h"
-#include "menu.h"
+#include "ownConsts.h"
 #include "additional.h"
+#include "workers.h"
 
 // return managerHead
 Manager* addManager( Manager* managerHead, char surname[],  char name[], int id, bool* badAlloc );

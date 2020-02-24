@@ -8,12 +8,11 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#include "structs.h"
-#include "projects.h"
-#include "managers.h"
-#include "workers.h"
-#include "project_worker.h"
+#include "ownConsts.h"
+#include "additional.h"
 #include "fileCheck.h"
+#include "files.h"
+#include "structs.h"
 
 // create list structure of existed files
 bool readCopies( FILE* f, CopyFile** copyFileHead, bool* BadAlloc );

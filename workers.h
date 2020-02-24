@@ -10,10 +10,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stddef.h>
-#include "structs.h"
+#include <stdbool.h>
+#include "sort.h"
 #include "projects.h"
-#include "menu.h"
-#include "additional.h"
+#include "project_worker.h"
+#include "managers.h"
 
 // return workerHead
 Worker* addWorker( Worker* workerHead, char surname[],  char name[], int id, bool* badAlloc );
@@ -26,7 +27,7 @@ Worker* dropWorker( Worker* workerHead, int id, Project_Worker** project_workerH
 // display list of workers (id & surname & name) / info that it is empty
 void showWorkers( Worker* workerHead );
 // display list of workers (id & surname & name & projects) / info that it is empty
-void showFullWorkers( Project* projectHead, Manager* managerHead, Worker* workerHead, Project_Worker* project_workerHead, char id );
+void showFullWorkers( Project* projectHead, Worker* workerHead, Project_Worker* project_workerHead, char id );
 // free allocated memory; set workerHead as NULL
 void clearWorkers( Worker** workerHead );
 
