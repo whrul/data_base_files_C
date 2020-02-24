@@ -3,7 +3,7 @@
 void start()
 {
     puts("-----------------");
-    puts("Welcome to the DataBase powered by Valera! :)");
+    puts("Welcome to the DataBase powered by Walerij Hrul.");
     puts("-----------------");
 }
 
