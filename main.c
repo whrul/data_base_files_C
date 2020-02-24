@@ -21,15 +21,34 @@ int main( void )
 
 	start();
 	
-	if( !loadCopies( &copyFileHead ) ){
+	bool badAlloc = false;
+
+	if( !loadCopies( &copyFileHead, &badAlloc ) ){
 		puts("Load files of copies: unsuccessfully.");
+		if ( badAlloc ) {
+			puts("Bad alloc error");
+			clearProjects( &projectHead ); 
+			clearManagers( &managerHead );
+			clearWorkers( &workerHead );
+			clearProjectWorker( &project_workerHead );
+			clearCopyFiles( &copyFileHead );
+			return 1;
+		}
 	}
 	else{
 		puts("Load files of copies: successfully.");
 	}
 	
-	menu( &projectHead, &managerHead, &workerHead, &project_workerHead, &sortHeadW, &sortHeadN, &copyFileHead );
-	
+	menu( &projectHead, &managerHead, &workerHead, &project_workerHead, &sortHeadW, &sortHeadN, &copyFileHead, &badAlloc );
+	if ( badAlloc ) {
+		puts("Bad alloc error");
+		clearProjects( &projectHead ); 
+		clearManagers( &managerHead );
+		clearWorkers( &workerHead );
+		clearProjectWorker( &project_workerHead );
+		clearCopyFiles( &copyFileHead );
+		return 1;
+	}
 
 	clearProjects( &projectHead ); 
 	clearManagers( &managerHead );

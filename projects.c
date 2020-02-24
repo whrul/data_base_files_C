@@ -1,7 +1,10 @@
 #include "projects.h"
 
-Project* addProject( Project* projectHead, char name[], int id_manager, int id ){
-	Project* p1 = checkMemoryAlloc( malloc( sizeof( Project ) ) );
+Project* addProject( Project* projectHead, char name[], int id_manager, int id, bool* badAlloc ){
+	Project* p1 = checkMemoryAlloc( malloc( sizeof( Project ) ), badAlloc );
+	if( *badAlloc ){
+		return projectHead;
+	}
 	strcpy(p1->name, name);
 	p1->id = id;
 	p1->id_manager = id_manager;

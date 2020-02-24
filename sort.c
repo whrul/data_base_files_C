@@ -18,7 +18,7 @@ void clearSortN( SortN** sortHead ){
 	}
 }
 
-SortW* copyProjectW( Project* projectHead, SortW** sortHead )
+SortW* copyProjectW( Project* projectHead, SortW** sortHead, bool* badAlloc )
 {
 	Project* copyProject = projectHead;
 	if( !copyProject ){
@@ -26,7 +26,10 @@ SortW* copyProjectW( Project* projectHead, SortW** sortHead )
 	}
 	while( copyProject )
 	{
-		SortW* s1 = checkMemoryAlloc( malloc( sizeof( SortW ) ) );
+		SortW* s1 = checkMemoryAlloc( malloc( sizeof( SortW ) ), badAlloc );
+		if( *badAlloc ){
+			return *sortHead;
+		}
 		s1->id = copyProject->id;
 		strcpy(s1->sortWord, copyProject->name);
 		s1->next = NULL;
@@ -46,7 +49,7 @@ SortW* copyProjectW( Project* projectHead, SortW** sortHead )
 	return *sortHead;
 }
 
-SortN* copyProjectN( Project* projectHead, SortN** sortHead, Project_Worker* project_workerHead )
+SortN* copyProjectN( Project* projectHead, SortN** sortHead, Project_Worker* project_workerHead, bool* badAlloc )
 {
 	Project* copyProject = projectHead;
 	if( !copyProject ){
@@ -54,7 +57,10 @@ SortN* copyProjectN( Project* projectHead, SortN** sortHead, Project_Worker* pro
 	}
 	while( copyProject )
 	{
-		SortN* s1 = checkMemoryAlloc( malloc( sizeof( SortN ) ) );
+		SortN* s1 = checkMemoryAlloc( malloc( sizeof( SortN ) ), badAlloc );
+		if( *badAlloc ){
+			return *sortHead;
+		}
 		s1->id = copyProject->id;
 		s1->next = NULL;
 
@@ -84,7 +90,7 @@ SortN* copyProjectN( Project* projectHead, SortN** sortHead, Project_Worker* pro
 	return *sortHead;
 }
 
-SortW* copyManagerW( Manager* managerHead, SortW** sortHead )
+SortW* copyManagerW( Manager* managerHead, SortW** sortHead, bool* badAlloc )
 {
 	Manager* copyManager = managerHead;
 	if( !copyManager ){
@@ -92,7 +98,10 @@ SortW* copyManagerW( Manager* managerHead, SortW** sortHead )
 	}
 	while( copyManager )
 	{
-		SortW* s1 = checkMemoryAlloc( malloc( sizeof( SortW ) ) );
+		SortW* s1 = checkMemoryAlloc( malloc( sizeof( SortW ) ), badAlloc );
+		if( *badAlloc ){
+			return *sortHead;
+		}
 		s1->id = copyManager->id;
 		strcpy(s1->sortWord, copyManager->surname);
 		s1->next = NULL;
@@ -112,7 +121,7 @@ SortW* copyManagerW( Manager* managerHead, SortW** sortHead )
 	return *sortHead;
 }
 
-SortW* copyWorkerW( Worker* workerHead, SortW** sortHead )
+SortW* copyWorkerW( Worker* workerHead, SortW** sortHead, bool* badAlloc )
 {
 	Worker* copyWorker = workerHead;
 	if( !copyWorker ){
@@ -120,7 +129,10 @@ SortW* copyWorkerW( Worker* workerHead, SortW** sortHead )
 	}
 	while( copyWorker )
 	{
-		SortW* s1 = checkMemoryAlloc( malloc( sizeof( SortW ) ) );
+		SortW* s1 = checkMemoryAlloc( malloc( sizeof( SortW ) ), badAlloc );
+		if( *badAlloc ){
+			return *sortHead;
+		}
 		s1->id = copyWorker->id;
 		strcpy(s1->sortWord, copyWorker->surname);
 		s1->next = NULL;

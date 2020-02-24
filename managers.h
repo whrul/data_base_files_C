@@ -16,7 +16,7 @@
 #include "additional.h"
 
 // return managerHead
-Manager* addManager( Manager* managerHead, char surname[],  char name[], int id );
+Manager* addManager( Manager* managerHead, char surname[],  char name[], int id, bool* badAlloc );
 // return the highest id among managers, 0 if empty
 unsigned long long maxManagerId( Manager* managerHead );
 // return NULL if there is non

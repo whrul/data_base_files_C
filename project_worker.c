@@ -1,6 +1,6 @@
 #include "project_worker.h"
 
-Project_Worker* addWorkerToProject( Project_Worker* project_workerHead, int id_worker, int id_project, int id ){
+Project_Worker* addWorkerToProject( Project_Worker* project_workerHead, int id_worker, int id_project, int id, bool* badAlloc ){
 
 	Project_Worker* test = project_workerHead;
 	while( test ){
@@ -10,7 +10,10 @@ Project_Worker* addWorkerToProject( Project_Worker* project_workerHead, int id_w
 		test = test->next;
 	}
 
-	Project_Worker* pw1 = checkMemoryAlloc( malloc( sizeof( Project_Worker ) ) );
+	Project_Worker* pw1 = checkMemoryAlloc( malloc( sizeof( Project_Worker ) ), badAlloc );
+	if( *badAlloc ) {
+		return project_workerHead;
+	}
 	pw1->id_worker = id_worker;
 	pw1->id_project = id_project;
 	pw1->id = id;

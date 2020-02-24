@@ -1,7 +1,11 @@
 #include "fileWrite.h"
 
-bool createCopy( Project* projectHead, Manager* managerHead, Worker* workerHead, Project_Worker* project_workerHead, CopyFile** copyFileHead, char** name ){
-	*name = makeTrueNameOfFile( *name );
+bool createCopy( Project* projectHead, Manager* managerHead, Worker* workerHead, 
+		Project_Worker* project_workerHead, CopyFile** copyFileHead, char** name, bool* badAlloc ){
+	*name = makeTrueNameOfFile( *name, badAlloc );
+	if ( *badAlloc ){
+		return false;
+	}
 	FILE* f = fopen( *name, "a+" ); 
 	if( !f ){
 		return false;
@@ -23,7 +27,10 @@ bool createCopy( Project* projectHead, Manager* managerHead, Worker* workerHead,
 	}
 	fclose( f );
 
-	CopyFile* copyFile = checkMemoryAlloc( malloc( sizeof( CopyFile ) ) ); //x2
+	CopyFile* copyFile = checkMemoryAlloc( malloc( sizeof( CopyFile ) ), badAlloc );
+	if( *badAlloc ){
+		return false;
+	}
 	copyFile->id = maxFileId( *copyFileHead ) + 1;
 	strcpy( copyFile->name, *name );
 	strcpy( copyFile->date, buf );
@@ -165,10 +172,13 @@ bool writeProjectWorker( FILE* f, Project_Worker* project_worker ){
 	return true;
 }
 
-char* makeTrueNameOfFile( char* name ){
+char* makeTrueNameOfFile( char* name, bool* badAlloc ){
 	const char* pre = "data/copies/";
 	const char* post = ".txt";
-	char* result = checkMemoryAlloc( malloc(  strlen( pre ) + strlen( name ) + strlen( post ) + 1 ) );
+	char* result = checkMemoryAlloc( malloc(  strlen( pre ) + strlen( name ) + strlen( post ) + 1 ), badAlloc );
+	if( *badAlloc ){
+		return NULL;
+	}
 	strcpy( result, pre );
 	strcat( result, name );
 	strcat( result, post );

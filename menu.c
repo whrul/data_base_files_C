@@ -7,7 +7,7 @@ void start()
     puts("-----------------");
 }
 
-void menu( Project** projectHead, Manager** managerHead, Worker** workerHead, Project_Worker** project_workerHead, SortW** sortHeadW, SortN** sortHeadN, CopyFile** copyFileHead )
+void menu( Project** projectHead, Manager** managerHead, Worker** workerHead, Project_Worker** project_workerHead, SortW** sortHeadW, SortN** sortHeadN, CopyFile** copyFileHead, bool* badAlloc )
 {
 	char choice = '&';
 	while( 'q' != choice){
@@ -23,22 +23,31 @@ void menu( Project** projectHead, Manager** managerHead, Worker** workerHead, Pr
 
 		switch( choice ){
 			case '1':
-				show( *projectHead, *managerHead, *workerHead, *project_workerHead, sortHeadW, sortHeadN );
+				show( *projectHead, *managerHead, *workerHead, *project_workerHead, sortHeadW, sortHeadN, badAlloc );
+				if( *badAlloc ){
+					return;
+				}
 				break;
 			case '2':
-				add( projectHead, managerHead, workerHead, project_workerHead );
+				add( projectHead, managerHead, workerHead, project_workerHead, badAlloc );
+				if( *badAlloc ){
+					return;
+				}
 				break;
 			case '3':
 				drop( projectHead, managerHead, workerHead, project_workerHead );
 				break;
 			case '4':
-				copies( projectHead, managerHead, workerHead, project_workerHead, copyFileHead );
+				copies( projectHead, managerHead, workerHead, project_workerHead, copyFileHead, badAlloc );
+				if( *badAlloc ){
+					return;
+				}
 				break;
 		}
 	}
 }
 
-void show( Project* projectHead, Manager* managerHead, Worker* workerHead, Project_Worker* project_workerHead, SortW** sortHeadW, SortN** sortHeadN ){
+void show( Project* projectHead, Manager* managerHead, Worker* workerHead, Project_Worker* project_workerHead, SortW** sortHeadW, SortN** sortHeadN, bool* badAlloc ){
 
     char choice = '&';
 	while( '0' != choice){
@@ -56,7 +65,10 @@ void show( Project* projectHead, Manager* managerHead, Worker* workerHead, Proje
 				showProjects( projectHead );
 				if( projectHead )
 				{
-					askForFullList( projectHead, managerHead, workerHead, project_workerHead, sortHeadW, sortHeadN, 'p' );
+					askForFullList( projectHead, managerHead, workerHead, project_workerHead, sortHeadW, sortHeadN, 'p', badAlloc );
+					if( *badAlloc ){
+						return;
+					}
 				}				
 				break;
 			case '2':
@@ -64,7 +76,10 @@ void show( Project* projectHead, Manager* managerHead, Worker* workerHead, Proje
 				showManagers( managerHead );
 				if( managerHead )
 				{
-					askForFullList( projectHead, managerHead, workerHead, project_workerHead, sortHeadW, sortHeadN, 'm' );
+					askForFullList( projectHead, managerHead, workerHead, project_workerHead, sortHeadW, sortHeadN, 'm', badAlloc );
+					if( *badAlloc ){
+						return;
+					}
 				}				
 				break;
 			case '3':
@@ -72,7 +87,10 @@ void show( Project* projectHead, Manager* managerHead, Worker* workerHead, Proje
 				showWorkers( workerHead );
 				if( workerHead )
 				{
-					askForFullList( projectHead, managerHead, workerHead, project_workerHead, sortHeadW, sortHeadN, 'w' );
+					askForFullList( projectHead, managerHead, workerHead, project_workerHead, sortHeadW, sortHeadN, 'w', badAlloc );
+					if( *badAlloc ){
+						return;
+					}
 				}	
 				break;
 		}
@@ -80,7 +98,7 @@ void show( Project* projectHead, Manager* managerHead, Worker* workerHead, Proje
 
 }
 
-void askForFullList( Project* projectHead, Manager* managerHead, Worker* workerHead, Project_Worker* project_workerHead, SortW** sortHeadW, SortN** sortHeadN, char table )
+void askForFullList( Project* projectHead, Manager* managerHead, Worker* workerHead, Project_Worker* project_workerHead, SortW** sortHeadW, SortN** sortHeadN, char table, bool* badAlloc )
 {
 	char id = '&';
 	while( 's' != id){
@@ -108,13 +126,19 @@ void askForFullList( Project* projectHead, Manager* managerHead, Worker* workerH
 		if( 'o' == id ){
 			switch ( table ){
 				case 'p':
-					*sortHeadW = copyProjectW( projectHead, sortHeadW );
+					*sortHeadW = copyProjectW( projectHead, sortHeadW, badAlloc );
+					if( *badAlloc ){
+						return;
+					}
 					*sortHeadW = sortByWord( sortHeadW );
 					showProjectsSortW( *sortHeadW );
 					clearSortW( sortHeadW );
 					*sortHeadW = NULL;
 
-					*sortHeadN = copyProjectN( projectHead, sortHeadN, project_workerHead );
+					*sortHeadN = copyProjectN( projectHead, sortHeadN, project_workerHead, badAlloc );
+					if( *badAlloc ){
+						return;
+					}
 					*sortHeadN = sortByNumber( sortHeadN );
 					showProjectsSortN( *sortHeadN, projectHead );
 					clearSortN( sortHeadN );
@@ -122,14 +146,20 @@ void askForFullList( Project* projectHead, Manager* managerHead, Worker* workerH
 
 					break;
 				case 'm':
-					*sortHeadW = copyManagerW( managerHead, sortHeadW );
+					*sortHeadW = copyManagerW( managerHead, sortHeadW, badAlloc );
+					if( *badAlloc ){
+						return;
+					}
 					*sortHeadW = sortByWord( sortHeadW );
 					showManagersSortW( *sortHeadW, managerHead );
 					clearSortW( sortHeadW );
 					*sortHeadW = NULL;
 					break;
 				case 'w':
-					*sortHeadW = copyWorkerW( workerHead, sortHeadW );
+					*sortHeadW = copyWorkerW( workerHead, sortHeadW, badAlloc );
+					if( *badAlloc ){
+						return;
+					}
 					*sortHeadW = sortByWord( sortHeadW );
 					showWorkersSortW( *sortHeadW, workerHead );
 					clearSortW( sortHeadW );
@@ -140,7 +170,7 @@ void askForFullList( Project* projectHead, Manager* managerHead, Worker* workerH
 	}
 }
 
-void add( Project** projectHead, Manager** managerHead, Worker** workerHead, Project_Worker** project_workerHead ){
+void add( Project** projectHead, Manager** managerHead, Worker** workerHead, Project_Worker** project_workerHead, bool* badAlloc ){
 
     char choice = '&';
 	while( '0' != choice){
@@ -158,17 +188,37 @@ void add( Project** projectHead, Manager** managerHead, Worker** workerHead, Pro
 		char* surname = NULL;
 		switch( choice ){
 			case '1':
-				addProjectMenu( projectHead, &name);
+				addProjectMenu( projectHead, &name, badAlloc );
+				if (badAlloc) {
+					free( name );
+					free( surname );
+					return;
+				}
 				break;
 			case '2':
-				addManagerMenu( managerHead, &name, &surname);
+				addManagerMenu( managerHead, &name, &surname, badAlloc );
+				if (badAlloc) {
+					free( name );
+					free( surname );
+					return;
+				}
 				break;
 			case '3':
-				addWorkerMenu( workerHead, &name, &surname);
+				addWorkerMenu( workerHead, &name, &surname, badAlloc );
+				if (badAlloc) {
+					free( name );
+					free( surname );
+					return;
+				}
 				break;
 			case '4':
-				if( !addWorkerToProjectMenu( projectHead, workerHead, project_workerHead ) ){
+				if( !addWorkerToProjectMenu( projectHead, workerHead, project_workerHead, badAlloc ) ){
 					puts("0 changed rows");
+					if (badAlloc) {
+						free( name );
+						free( surname );
+						return;
+					}
 				}
 				else{
 					puts("Done");
@@ -189,12 +239,18 @@ void add( Project** projectHead, Manager** managerHead, Worker** workerHead, Pro
 	}
 }
 
-void addProjectMenu( Project** projectHead, char** name){
+void addProjectMenu( Project** projectHead, char** name, bool* badAlloc ){
 	printf("\nInput name of project: ");
-	*name = readInputWord();
+	*name = readInputWord( badAlloc );
+	if( *badAlloc ){
+		return;
+	}
 	if( *name )
 	{
-		*projectHead = addProject( *projectHead, *name, 0, maxProjectId( *projectHead ) + 1 );
+		*projectHead = addProject( *projectHead, *name, 0, maxProjectId( *projectHead ) + 1, badAlloc );
+		if( *badAlloc ){
+			return;
+		}
 		puts("Added");
 	}
 	else
@@ -204,13 +260,22 @@ void addProjectMenu( Project** projectHead, char** name){
 }
 
 
-void addManagerMenu( Manager** managerHead, char** name, char** surname){
+void addManagerMenu( Manager** managerHead, char** name, char** surname, bool* badAlloc){
 	printf("\nInput surname of manager: ");
-	*surname = readInputWord();
+	*surname = readInputWord( badAlloc );
+	if( *badAlloc ){
+		return;
+	}
 	printf("Input name of manager: ");
-	*name = readInputWord();
+	*name = readInputWord( badAlloc );
+	if( *badAlloc ){
+		return;
+	}
 	if( *name && *surname ){
-		*managerHead = addManager( *managerHead, *surname, *name, maxManagerId( *managerHead ) + 1 );
+		*managerHead = addManager( *managerHead, *surname, *name, maxManagerId( *managerHead ) + 1, badAlloc );
+		if( *badAlloc ){
+			return;
+		}
 		puts("Added");
 	}
 	else{
@@ -218,13 +283,22 @@ void addManagerMenu( Manager** managerHead, char** name, char** surname){
 	}
 }
 
-void addWorkerMenu( Worker** workerHead, char** name, char** surname){
+void addWorkerMenu( Worker** workerHead, char** name, char** surname, bool* badAlloc){
 		printf("\nInput surname of worker: ");
-		*surname = readInputWord();
+		*surname = readInputWord( badAlloc );
+		if( *badAlloc ){
+			return;
+		}
 		printf("Input name of worker: ");
-		*name = readInputWord();
+		*name = readInputWord( badAlloc );
+		if( *badAlloc ){
+			return;
+		}
 		if( *name && *surname ){
-			*workerHead = addWorker( *workerHead, *surname, *name, maxWorkerId( *workerHead ) + 1 );
+			*workerHead = addWorker( *workerHead, *surname, *name, maxWorkerId( *workerHead ) + 1, badAlloc );
+			if( *badAlloc ){
+				return;
+			}
 			puts("Added");
 		}
 		else{
@@ -232,7 +306,7 @@ void addWorkerMenu( Worker** workerHead, char** name, char** surname){
 		}
 }
 
-bool addWorkerToProjectMenu( Project** projectHead, Worker** workerHead, Project_Worker** project_workerHead ){
+bool addWorkerToProjectMenu( Project** projectHead, Worker** workerHead, Project_Worker** project_workerHead, bool* badAlloc ){
 	showProjects( *projectHead );
 	if( !*projectHead ){
 		return false;
@@ -255,8 +329,8 @@ bool addWorkerToProjectMenu( Project** projectHead, Worker** workerHead, Project
 		return false;
 	}
 
-	*project_workerHead = addWorkerToProject( *project_workerHead, id_worker, id_project, maxProjectWorkerId( *project_workerHead ) + 1 );
-	return true;
+	*project_workerHead = addWorkerToProject( *project_workerHead, id_worker, id_project, maxProjectWorkerId( *project_workerHead ) + 1, badAlloc );
+	return !badAlloc;
 }
 
 bool addManagerToProjectMenu( Project** projectHead, Manager** managerHead ){
@@ -393,7 +467,7 @@ bool dropWorkerFromProjectMenu( Project** projectHead, Manager** managerHead, Wo
 	return false;
 }
 
-void copies( Project** projectHead, Manager** managerHead, Worker** workerHead, Project_Worker** project_workerHead, CopyFile** copyFileHead ){
+void copies( Project** projectHead, Manager** managerHead, Worker** workerHead, Project_Worker** project_workerHead, CopyFile** copyFileHead, bool* badAlloc ){
 
     char choice = '&';
 	while( '0' != choice){
@@ -409,12 +483,20 @@ void copies( Project** projectHead, Manager** managerHead, Worker** workerHead, 
 			case '1':
 				printf("Input name of file: ");
 				char* name = NULL;
-				name = readInputWord();
+				name = readInputWord( badAlloc );
+				if( *badAlloc ){
+					return;
+				}
 				char* forFree = name;
-				if( createCopy( *projectHead, *managerHead, *workerHead, *project_workerHead, copyFileHead, &name ) ){
+				if( createCopy( *projectHead, *managerHead, *workerHead, *project_workerHead, copyFileHead, &name, badAlloc ) ){
 					puts("Successfully");
 				}
 				else{
+					if( *badAlloc ){
+						free( name );
+						free( forFree );
+						return;
+					}
 					puts("Some errors =(");
 				}	
 				free( name );
@@ -425,10 +507,13 @@ void copies( Project** projectHead, Manager** managerHead, Worker** workerHead, 
 				if( *copyFileHead ){
 					printf("\nInput id of copy file for UPLOADing: ");
 					unsigned long long id_file = readInputPositiveNumber();
-					if( takeDataFromCopy( projectHead, managerHead, workerHead, project_workerHead, copyFileHead, id_file ) ){
+					if( takeDataFromCopy( projectHead, managerHead, workerHead, project_workerHead, copyFileHead, id_file, badAlloc ) ){
 						puts("Uploading copy: successfully.");
 					}
 					else{
+						if( *badAlloc ){
+							return;
+						}
 						clearProjects( projectHead ); 
 						clearManagers( managerHead );
 						clearWorkers( workerHead );

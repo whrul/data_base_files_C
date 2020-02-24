@@ -1,7 +1,10 @@
 #include "managers.h"
 
-Manager* addManager( Manager* managerHead, char surname[], char name[], int id ){
-	Manager* m1 = checkMemoryAlloc( malloc( sizeof( Manager ) ) );
+Manager* addManager( Manager* managerHead, char surname[], char name[], int id, bool* badAlloc ){
+	Manager* m1 = checkMemoryAlloc( malloc( sizeof( Manager ) ), badAlloc );
+	if( *badAlloc ){
+		return managerHead;
+	}
 	strcpy(m1->name, name);
 	strcpy(m1->surname, surname);
 	m1->id = id;

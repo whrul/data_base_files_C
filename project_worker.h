@@ -14,7 +14,7 @@
 #include "additional.h"
 
 // create "line" in "datatable id-id_project-id_worker" if line with such id_worker & id_project does not exist
-Project_Worker* addWorkerToProject( Project_Worker* project_workerHead, int id_worker, int id_project, int id );
+Project_Worker* addWorkerToProject( Project_Worker* project_workerHead, int id_worker, int id_project, int id, bool* badAlloc );
 // return the highest id in "datatable id-id_project-id_worker", 0 if empty
 unsigned long long maxProjectWorkerId( Project_Worker* project_workerHead );
 // free allocated memory; set project_workerHead as NULL

@@ -1,7 +1,10 @@
 #include "workers.h"
 
-Worker* addWorker( Worker* workerHead, char surname[], char name[], int id ){
-	Worker* w1 = checkMemoryAlloc( malloc( sizeof( Worker ) ) );
+Worker* addWorker( Worker* workerHead, char surname[], char name[], int id, bool* badAlloc ){
+	Worker* w1 = checkMemoryAlloc( malloc( sizeof( Worker ) ), badAlloc );
+	if( *badAlloc ){
+		return workerHead;
+	}
 	strcpy(w1->name, name);
 	strcpy(w1->surname, surname);
 	w1->id = id;

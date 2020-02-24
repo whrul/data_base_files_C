@@ -16,7 +16,7 @@
 #include "additional.h"
 
 // return workerHead
-Worker* addWorker( Worker* workerHead, char surname[],  char name[], int id );
+Worker* addWorker( Worker* workerHead, char surname[],  char name[], int id, bool* badAlloc );
 // return the highest id among workers, 0 if empty
 unsigned long long maxWorkerId( Worker* workerHead );
 // return NULL if there is non

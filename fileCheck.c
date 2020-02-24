@@ -26,14 +26,14 @@ bool checkKey( char* const key, char* const buf )
 	return false;
 }
 
-bool checkFileForCorrect( FILE* temp, Project** projectHead, Manager** managerHead, Worker** workerHead, Project_Worker** project_workerHead ){
+bool checkFileForCorrect( FILE* temp, Project** projectHead, Manager** managerHead, Worker** workerHead, Project_Worker** project_workerHead, bool* badAlloc ){
 	char buf[ MAX_LINE_LENGTH ] = {0};
 	char nextSymbol = ' ';
 	char* result = fgets( buf, MAX_LINE_LENGTH, temp);
 	if( result && checkKey( "Projects", buf ) ){
 		nextSymbol = checkForHash( temp );
 		while( !(ferror( temp ) || feof( temp )) && nextSymbol!='#'){
-			if( !checkProject( temp, projectHead ) ){
+			if( !checkProject( temp, projectHead, badAlloc ) ){
 				return false;
 			}
 			nextSymbol = checkForHash( temp );
@@ -46,7 +46,7 @@ bool checkFileForCorrect( FILE* temp, Project** projectHead, Manager** managerHe
 	if( result && checkKey( "Managers", buf ) ){
 		nextSymbol = checkForHash( temp );
 		while( !(ferror( temp ) || feof( temp )) && nextSymbol!='#'){
-			if( !checkManager( temp, managerHead ) ){
+			if( !checkManager( temp, managerHead, badAlloc ) ){
 				return false;
 			}
 			nextSymbol = checkForHash( temp );
@@ -60,7 +60,7 @@ bool checkFileForCorrect( FILE* temp, Project** projectHead, Manager** managerHe
 	if( result && checkKey( "Workers", buf ) ){
 		nextSymbol = checkForHash( temp );
 		while( !(ferror( temp ) || feof( temp )) && nextSymbol!='#'){
-			if( !checkWorker( temp, workerHead ) ){
+			if( !checkWorker( temp, workerHead, badAlloc ) ){
 				return false;
 			}
 			nextSymbol = checkForHash( temp );
@@ -74,7 +74,7 @@ bool checkFileForCorrect( FILE* temp, Project** projectHead, Manager** managerHe
 	if( result && checkKey( "Project_Workers", buf ) ){
 		nextSymbol = checkForHash( temp );
 		while( !(ferror( temp ) || feof( temp )) && nextSymbol!='#' ){
-			if( !checkProject_Worker( temp, project_workerHead ) ){
+			if( !checkProject_Worker( temp, project_workerHead, badAlloc ) ){
 				return false;
 			}
 			nextSymbol = checkForHash( temp );
@@ -87,52 +87,52 @@ bool checkFileForCorrect( FILE* temp, Project** projectHead, Manager** managerHe
 	
 }
 
-bool checkProject( FILE* f, Project** projectHead ){
+bool checkProject( FILE* f, Project** projectHead, bool* badAlloc ){
 	bool checking = false;
 	char name[ MAX_KEY_SIZE ] = {0};
 	unsigned long long id;
 	unsigned long long id_manager;
 		checking = readChar( f, '{' ) && writeNumberValueOfKeyInVariable( f, "id", &id ) && writeTextValueOfKeyInVariable( f, "name", name ) && writeNumberValueOfKeyInVariable( f, "id_manager", &id_manager ) && readChar( f, '}' );
 	if( checking ){
-		*projectHead = addProject( *projectHead, name, id_manager, id );
+		*projectHead = addProject( *projectHead, name, id_manager, id, badAlloc );
 	}
-	return checking;
+	return checking && badAlloc;
 }
 
-bool checkManager( FILE* f, Manager** managerHead ){
+bool checkManager( FILE* f, Manager** managerHead, bool* badAlloc ){
 	bool checking = false;
 	char name[ MAX_KEY_SIZE ] = {0};
 	char surname[ MAX_KEY_SIZE ] = {0};
 	unsigned long long id;
 		checking = readChar( f, '{' ) && writeNumberValueOfKeyInVariable( f, "id", &id ) && writeTextValueOfKeyInVariable( f, "name", name ) && writeTextValueOfKeyInVariable( f, "surname", surname ) && readChar( f, '}' );
 	if( checking ){
-		*managerHead = addManager( *managerHead, surname, name, id );
+		*managerHead = addManager( *managerHead, surname, name, id, badAlloc );
 	}
-	return checking;
+	return checking && badAlloc;
 }
 
-bool checkWorker( FILE* f, Worker** workerHead ){
+bool checkWorker( FILE* f, Worker** workerHead, bool* badAlloc ){
 	bool checking = false;
 	char name[ MAX_KEY_SIZE ] = {0};
 	char surname[ MAX_KEY_SIZE ] = {0};
 	unsigned long long id;
 		checking = readChar( f, '{' ) && writeNumberValueOfKeyInVariable( f, "id", &id ) && writeTextValueOfKeyInVariable( f, "name", name ) && writeTextValueOfKeyInVariable( f, "surname", surname ) && readChar( f, '}' );
 	if( checking ){
-		*workerHead = addWorker( *workerHead, surname, name, id );
+		*workerHead = addWorker( *workerHead, surname, name, id, badAlloc );
 	}
-	return checking;
+	return checking && badAlloc;
 }
 
-bool checkProject_Worker( FILE* f, Project_Worker** project_workerHead ){
+bool checkProject_Worker( FILE* f, Project_Worker** project_workerHead, bool* badAlloc ){
 	bool checking = false;
 	unsigned long long id_project;
 	unsigned long long id_worker;
 	unsigned long long id;
 		checking = readChar( f, '{' ) && writeNumberValueOfKeyInVariable( f, "id", &id ) && writeNumberValueOfKeyInVariable( f, "id_project", &id_project ) && writeNumberValueOfKeyInVariable( f, "id_worker", &id_worker ) && readChar( f, '}' );
 	if( checking ){
-		*project_workerHead = addWorkerToProject( *project_workerHead, id_worker, id_project, id );
+		*project_workerHead = addWorkerToProject( *project_workerHead, id_worker, id_project, id, badAlloc );
 	}
-	return checking;
+	return checking && badAlloc;
 }
 
 bool writeTextValueOfKeyInVariable( FILE* const temp, char* key, char* variableForWriting )
