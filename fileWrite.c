@@ -163,8 +163,8 @@ bool writeProjectWorkers( FILE* f, Project_Worker* project_workerHead ){
 bool writeProjectWorker( FILE* f, Project_Worker* project_worker ){
 	fseek( f, 0, SEEK_END );
 	fprintf( f, "{\n\"id\":%llu,\n", (unsigned long long)project_worker->id );
-	fprintf( f, "\"id_project\":%llu,\n", (unsigned long long)project_worker->id );
-	fprintf( f, "\"id_worker\":%llu,\n}\n", (unsigned long long)project_worker->id );
+	fprintf( f, "\"id_project\":%llu,\n", (unsigned long long)project_worker->id_project );
+	fprintf( f, "\"id_worker\":%llu,\n}\n", (unsigned long long)project_worker->id_worker );
 	if( ferror(f) )
 	{
 		return false;
