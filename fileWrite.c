@@ -177,7 +177,7 @@ char* makeTrueNameOfFile( char* name, bool* badAlloc ){
 	const char* post = ".txt";
 	char* result = checkMemoryAlloc( malloc(  strlen( pre ) + strlen( name ) + strlen( post ) + 1 ), badAlloc );
 	if( *badAlloc ){
-		return "";
+		return NULL;
 	}
 	strcpy( result, pre );
 	strcat( result, name );

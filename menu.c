@@ -190,18 +190,24 @@ void add( Project** projectHead, Manager** managerHead, Worker** workerHead, Pro
 			case '1':
 				addProjectMenu( projectHead, &name, badAlloc );
 				if (badAlloc) {
+					free( name );
+					free( surname );
 					return;
 				}
 				break;
 			case '2':
 				addManagerMenu( managerHead, &name, &surname, badAlloc );
 				if (badAlloc) {
+					free( name );
+					free( surname );
 					return;
 				}
 				break;
 			case '3':
 				addWorkerMenu( workerHead, &name, &surname, badAlloc );
 				if (badAlloc) {
+					free( name );
+					free( surname );
 					return;
 				}
 				break;
@@ -209,6 +215,8 @@ void add( Project** projectHead, Manager** managerHead, Worker** workerHead, Pro
 				if( !addWorkerToProjectMenu( projectHead, workerHead, project_workerHead, badAlloc ) ){
 					puts("0 changed rows");
 					if (badAlloc) {
+						free( name );
+						free( surname );
 						return;
 					}
 				}
