@@ -3,7 +3,14 @@
 void start()
 {
     puts("-----------------");
-    puts("Welcome to the DataBase powered by Walerij Hrul.");
+    puts("Welcome into your own database.");
+	puts("-----------------");
+}
+
+void end()
+{
+	puts("-----------------");
+	puts("Created by Walerij Hrul.");
     puts("-----------------");
 }
 
@@ -11,11 +18,11 @@ void menu( Project** projectHead, Manager** managerHead, Worker** workerHead, Pr
 {
 	char choice = '&';
 	while( 'q' != choice){
-		puts("\n| Please, choose type of action:");
+		puts("\nPlease, choose type of action:");
     	puts("| 1 - for DISPLAYing smth");
     	puts("| 2 - for CREATing/ADDing");
     	puts("| 3 - for DELETing smth");
-    	puts("| 4 - for work with COPIES");
+    	puts("| 4 - for working with COPIES");
     	puts("| q - for exit the program\n");
 
 		choice = mygetchar();
@@ -45,6 +52,7 @@ void menu( Project** projectHead, Manager** managerHead, Worker** workerHead, Pr
 				break;
 		}
 	}
+	end();
 }
 
 void show( Project* projectHead, Manager* managerHead, Worker* workerHead, Project_Worker* project_workerHead, SortW** sortHeadW, SortN** sortHeadN, bool* badAlloc ){

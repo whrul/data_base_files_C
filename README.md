@@ -1,12 +1,13 @@
-# data_base_files_C
+# Database of Projects-Managers-Workers
+# Author: Walerij Hrul
 
-Database managers-workers-projects with loading/saving data from/into files.
+Implementation of database in C with using own-implemented json-parsing
+- creating/removing projects, managers, workers and dependencies between them
+- creating/loading data-copies from/into files
+- show data in sorting mode
 
-Own implementation of json-parsing
-
-.h files contains brief descriptions of purpose of file and functions
-
-!!! You should have folder data/copies in folder with .out file
+### You should have folder data/copies in folder with .out file
+### .h files contains brief descriptions of purpose of file and functions
 
 ![photo1](img/1.png)</br>
 ![photo2](img/2.png)</br>

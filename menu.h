@@ -21,6 +21,8 @@
 
 // show start info
 void start( void );
+// show info when exit the program
+void end( void );
 // show main menu
 void menu( Project** projectHead, Manager** managerHead, Worker** workerHead, Project_Worker** project_workerHead, SortW** sortHeadW, SortN** sortHeadN, CopyFile** copyFileHead, bool* badAlloc );
 
